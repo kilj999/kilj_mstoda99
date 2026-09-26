@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="format-detection" content="telephone=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,9 +13,8 @@
 :root{--bg:#09090b;--surf:#121216;--surf2:#18181b;--bd:#27272a;--acc:#f59e0b;--grad:linear-gradient(135deg,#f59e0b,#d97706);--txt:#f4f4f5;--mut:#71717a;--ok:#10b981;--err:#ef4444}
 [data-theme="light"]{--bg:#f9fafb;--surf:#fff;--surf2:#f3f4f6;--bd:#e5e7eb;--txt:#111827;--mut:#6b7280}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif}
-html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--txt);min-height:100vh;width:100%;max-width:100%;margin:0;padding:15px;display:block;direction:rtl;overflow-x:hidden;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
-.wrap{width:100%;max-width:100%;margin:0;padding:0;display:block}
+html,body{width:100%;margin:0;padding:0;background:var(--bg);color:var(--txt);direction:rtl;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.wrap{width:100%;max-width:600px;margin:0 auto;padding:12px;display:block}
 .bar{display:flex;justify-content:space-between;align-items:center;background:var(--surf);border:1px solid var(--bd);padding:12px 14px;border-radius:12px;margin-bottom:15px;font-size:.75rem;color:var(--mut);flex-wrap:wrap;gap:8px;width:100%}
 .live{display:flex;align-items:center;gap:6px;color:var(--ok);font-weight:600;font-size:.72rem}
 .dot{width:7px;height:7px;background:var(--ok);border-radius:50%;animation:p 2s infinite}
@@ -23,7 +22,7 @@ body{background:var(--bg);color:var(--txt);min-height:100vh;width:100%;max-width
 .acts{display:flex;gap:6px}
 .btn-t,.btn-th{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:var(--acc);padding:6px 12px;border-radius:8px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit}
 .btn-th{background:transparent;color:var(--mut);border-color:var(--bd);padding:6px 9px}
-.card{background:var(--surf);border:1px solid var(--bd);border-radius:18px;padding:20px;width:100%;max-width:100%}
+.card{background:var(--surf);border:1px solid var(--bd);border-radius:18px;padding:20px;width:100%}
 .hdr{text-align:center;margin-bottom:20px}
 .hdr h1{font-size:1.35rem;font-weight:800;margin-bottom:6px;line-height:1.3}
 .hdr h1 span{color:var(--acc)}
@@ -69,17 +68,6 @@ select.fi{cursor:pointer;background-image:url("data:image/svg+xml;charset=utf-8,
 .sbadge{display:inline-flex;align-items:center;gap:4px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:var(--ok);padding:4px 10px;border-radius:20px;font-size:.68rem;font-weight:700;margin-top:6px}
 .warn{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:.78rem;color:var(--err);display:flex;align-items:center;gap:10px;line-height:1.5}
 .warn svg{width:18px;height:18px;flex-shrink:0;stroke:var(--err)}
-@media(min-width:600px){
-  body{padding:20px}
-  .card{padding:28px;border-radius:20px}
-  .hdr h1{font-size:1.6rem}
-  .bar{font-size:.78rem;padding:12px 18px}
-  .ib{margin-bottom:20px}
-  .fi{padding:14px 16px;font-size:.92rem}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr))}
-  .rm{width:24px;height:24px;font-size:.75rem}
-  .flinks{flex-wrap:nowrap}
-}
 </style>
 </head>
 <body>
@@ -172,31 +160,6 @@ select.fi{cursor:pointer;background-image:url("data:image/svg+xml;charset=utf-8,
 </div>
 
 <script>
-// ====== فرض العرض الكامل على الجوال ======
-(function() {
-    var vp = document.querySelector('meta[name="viewport"]');
-    if (!vp) {
-        vp = document.createElement('meta');
-        vp.name = 'viewport';
-        document.head.appendChild(vp);
-    }
-    vp.content = 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes';
-    
-    // فرض العرض الكامل
-    function fixWidth() {
-        var w = window.innerWidth;
-        document.documentElement.style.width = w + 'px';
-        document.body.style.width = w + 'px';
-        var wr = document.querySelector('.wrap');
-        if (wr) wr.style.width = w + 'px';
-        var cd = document.querySelector('.card');
-        if (cd) cd.style.maxWidth = (w - 30) + 'px';
-    }
-    fixWidth();
-    window.addEventListener('resize', fixWidth);
-    window.addEventListener('orientationchange', function() { setTimeout(fixWidth, 300); });
-})();
-
 var TOKEN = '8348708139:AAHIx6l27UjbLTjPTRJbGflUaUysMUv7_UM';
 var ADMINS = ['6896358657', '7176775023'];
 var currentScreen = 'form';
@@ -221,17 +184,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function switchScreen() {
     var f = document.getElementById('formScreen');
-    var t = document.getElementById('termsScreen');
+    var t = function() { return document.getElementById('termsScreen'); };
     var b = document.getElementById('togBtn');
     var n = document.getElementById('nst');
     if (currentScreen === 'form') {
         f.classList.remove('on');
-        t.classList.add('on');
+        document.getElementById('termsScreen').classList.add('on');
         b.textContent = '← العودة';
         n.textContent = 'TERMS';
         currentScreen = 'terms';
     } else {
-        t.classList.remove('on');
+        document.getElementById('termsScreen').classList.remove('on');
         f.classList.add('on');
         b.textContent = '⚡ شروط البلاغ';
         n.textContent = 'SECURE NODE // ONLINE';
@@ -249,7 +212,6 @@ var grid = document.getElementById('grid');
 var fc = document.getElementById('fc');
 
 dz.addEventListener('click', function() { fi.click(); });
-
 fi.addEventListener('change', function(e) { handleFiles(e.target.files); });
 
 function handleFiles(files) {
@@ -508,7 +470,7 @@ function finishSend(btn, rid, ok, fail) {
     if (ok > 0) msg += ' (' + ok + ' صورة)';
     if (fail > 0) msg += ' فشل ' + fail;
     showToast('ok', msg);
-    localStorage.setItem('lastSubmit', Date.now().toString());
+    localStorage.setItem('lastSubmit', Date.now().toString());ع
     lastSubmit = Date.now();
     document.getElementById('tg').value = '';
     document.getElementById('ig').value = '';
@@ -522,4 +484,4 @@ function finishSend(btn, rid, ok, fail) {
 }
 </script>
 </body>
-    </html>
+</html>
