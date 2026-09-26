@@ -13,8 +13,9 @@
 :root{--bg:#09090b;--surf:#121216;--surf2:#18181b;--bd:#27272a;--acc:#f59e0b;--grad:linear-gradient(135deg,#f59e0b,#d97706);--txt:#f4f4f5;--mut:#71717a;--ok:#10b981;--err:#ef4444}
 [data-theme="light"]{--bg:#f9fafb;--surf:#fff;--surf2:#f3f4f6;--bd:#e5e7eb;--txt:#111827;--mut:#6b7280}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif}
-html,body{width:100%;margin:0;padding:0;background:var(--bg);color:var(--txt);direction:rtl;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-.wrap{width:100%;max-width:600px;margin:0 auto;padding:12px;display:block}
+html{width:100%;height:100%;background:var(--bg)}
+body{background:var(--bg);color:var(--txt);min-height:100vh;width:100%;margin:0;padding:12px;direction:rtl;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;justify-content:center;align-items:flex-start}
+.wrap{width:100%;max-width:550px;margin:0 auto;padding:0;display:block}
 .bar{display:flex;justify-content:space-between;align-items:center;background:var(--surf);border:1px solid var(--bd);padding:12px 14px;border-radius:12px;margin-bottom:15px;font-size:.75rem;color:var(--mut);flex-wrap:wrap;gap:8px;width:100%}
 .live{display:flex;align-items:center;gap:6px;color:var(--ok);font-weight:600;font-size:.72rem}
 .dot{width:7px;height:7px;background:var(--ok);border-radius:50%;animation:p 2s infinite}
@@ -184,17 +185,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function switchScreen() {
     var f = document.getElementById('formScreen');
-    var t = function() { return document.getElementById('termsScreen'); };
+    var t = document.getElementById('termsScreen');
     var b = document.getElementById('togBtn');
     var n = document.getElementById('nst');
     if (currentScreen === 'form') {
         f.classList.remove('on');
-        document.getElementById('termsScreen').classList.add('on');
+        t.classList.add('on');
         b.textContent = '← العودة';
         n.textContent = 'TERMS';
         currentScreen = 'terms';
     } else {
-        document.getElementById('termsScreen').classList.remove('on');
+        t.classList.remove('on');
         f.classList.add('on');
         b.textContent = '⚡ شروط البلاغ';
         n.textContent = 'SECURE NODE // ONLINE';
@@ -470,7 +471,7 @@ function finishSend(btn, rid, ok, fail) {
     if (ok > 0) msg += ' (' + ok + ' صورة)';
     if (fail > 0) msg += ' فشل ' + fail;
     showToast('ok', msg);
-    localStorage.setItem('lastSubmit', Date.now().toString());ع
+    localStorage.setItem('lastSubmit', Date.now().toString());
     lastSubmit = Date.now();
     document.getElementById('tg').value = '';
     document.getElementById('ig').value = '';
@@ -479,6 +480,7 @@ function finishSend(btn, rid, ok, fail) {
     document.getElementById('cc').textContent = '0 / 3000 حرف';
     uploadedFiles = [];
     renderGrid();
+    btn.disabled.disabled = false;
     btn.disabled = false;
     btn.textContent = 'إرسال البلاغ فوراً 🔒';
 }
