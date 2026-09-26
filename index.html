@@ -1,635 +1,510 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكافحه الوسواس القهري - من قبل كلج</title>
-    <style>
-        :root {
-            --accent-color: #00ff66; /* أخضر هكرز مميز ونقي */
-            --accent-secondary: #00bfff; /* أزرق سيبراني */
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --danger-color: #f43f5e;
-            --success-color: #22c55e;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #030712 0%, #0f172a 50%, #022c22 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            color: var(--accent-color);
-            font-size: 2rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .card {
-            background-color: rgba(15, 23, 42, 0.85); 
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 255, 102, 0.15);
-            backdrop-filter: blur(10px);
-        }
-
-        .rules-section h3 {
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-
-        .rules-list {
-            list-style: none;
-        }
-
-        .rules-list li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-right: 20px;
-            font-size: 0.9rem;
-        }
-
-        .rules-list li::before {
-            content: "•";
-            position: absolute;
-            right: 0;
-            font-weight: bold;
-        }
-
-        .allowed::before { color: var(--success-color); }
-        .forbidden::before { color: var(--danger-color); }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #1e293b;
-            background-color: rgba(3, 7, 18, 0.8);
-            color: var(--text-color);
-            font-size: 1rem;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 8px rgba(0, 255, 102, 0.3);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .note {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #00ff66, #00bfff);
-            color: #030712;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        #status-msg {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .owner-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .owner-btn {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            background-color: rgba(3, 7, 18, 0.8);
-            color: var(--accent-color);
-            border: 1px solid var(--accent-color);
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .owner-btn:hover {
-            background-color: var(--accent-color);
-            color: #030712;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KILJ // مركز بلاغات الابتزاز </title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+:root{--bg:#09090b;--surf:#121216;--surf2:#18181b;--bd:#27272a;--acc:#f59e0b;--grad:linear-gradient(135deg,#f59e0b,#d97706);--txt:#f4f4f5;--mut:#71717a;--ok:#10b981;--err:#ef4444}
+[data-theme="light"]{--bg:#f9fafb;--surf:#fff;--surf2:#f3f4f6;--bd:#e5e7eb;--txt:#111827;--mut:#6b7280}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif}
+body{background:var(--bg);color:var(--txt);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+.wrap{width:100%;max-width:680px}
+.bar{display:flex;justify-content:space-between;align-items:center;background:var(--surf);border:1px solid var(--bd);padding:12px 18px;border-radius:12px;margin-bottom:20px;font-size:.78rem;color:var(--mut);flex-wrap:wrap;gap:10px}
+.live{display:flex;align-items:center;gap:8px;color:var(--ok);font-weight:600}
+.dot{width:8px;height:8px;background:var(--ok);border-radius:50%;animation:p 2s infinite}
+@keyframes p{50%{transform:scale(1.3)}}
+.acts{display:flex;gap:8px}
+.btn-t,.btn-th{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);color:var(--acc);padding:6px 14px;border-radius:8px;font-size:.75rem;font-weight:700;cursor:pointer}
+.btn-th{background:transparent;color:var(--mut);border-color:var(--bd);padding:6px 10px}
+.card{background:var(--surf);border:1px solid var(--bd);border-radius:20px;padding:32px}
+.hdr{text-align:center;margin-bottom:25px}
+.hdr h1{font-size:1.7rem;font-weight:800;margin-bottom:8px}
+.hdr h1 span{color:var(--acc)}
+.hdr p{color:var(--mut);font-size:.85rem}
+.scr{display:none}
+.scr.on{display:block}
+.tbox{background:var(--surf2);border:1px solid rgba(245,158,11,.3);border-radius:14px;padding:22px;font-size:.88rem;line-height:1.9;margin-bottom:22px}
+.tbox h3{color:var(--acc);margin-bottom:14px}
+.tbox ul{padding-right:20px}
+.tbox li{margin-bottom:10px}
+.ib{margin-bottom:20px}
+.ib label{display:block;font-size:.82rem;color:var(--mut);margin-bottom:8px;font-weight:600}
+.req{color:var(--err)}
+.fi{width:100%;padding:14px 16px;background:var(--surf2);border:1px solid var(--bd);border-radius:12px;color:var(--txt);font-size:.92rem;font-family:inherit}
+.fi:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(245,158,11,.15)}
+textarea.fi{resize:vertical;min-height:130px}
+select.fi{cursor:pointer}
+.ff{display:flex;justify-content:space-between;margin-top:6px;font-size:.75rem;color:var(--mut)}
+.sec{color:var(--acc);font-weight:600}
+.drop{border:2px dashed var(--bd);border-radius:12px;padding:25px;text-align:center;cursor:pointer;background:var(--surf2)}
+.drop:hover{border-color:var(--acc)}
+.drop svg{width:32px;height:32px;stroke:var(--acc);margin-bottom:8px}
+.drop p{color:var(--mut);font-size:.82rem}
+.cnt{display:inline-block;background:var(--acc);color:#09090b;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:700;margin-right:5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-top:12px}
+.thumb{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;border:1px solid var(--bd)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.rm{position:absolute;top:4px;right:4px;width:24px;height:24px;background:rgba(239,68,68,.95);color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:.75rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+.sbtn,.bbtn{width:100%;padding:15px;border:none;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit}
+.sbtn{background:var(--grad);color:#09090b;box-shadow:0 4px 20px rgba(245,158,11,.25)}
+.sbtn:disabled{opacity:.6;cursor:not-allowed}
+.bbtn{background:var(--bd);color:var(--txt)}
+.pbar{width:100%;height:6px;background:var(--bd);border-radius:3px;overflow:hidden;margin-top:10px;display:none}
+.pbar.on{display:block}
+.pfill{height:100%;background:var(--grad);width:0%;transition:width .3s}
+#toast{margin-top:15px;padding:14px;border-radius:12px;text-align:center;font-size:.88rem;font-weight:700;display:none}
+#toast.ok{background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);color:var(--ok);display:block}
+#toast.err{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:var(--err);display:block}
+.flinks{display:flex;gap:10px;margin-top:25px;padding-top:20px;border-top:1px solid var(--bd)}
+.lchip{flex:1;padding:11px;background:var(--surf2);border:1px solid var(--bd);color:var(--acc);border-radius:10px;text-decoration:none;font-size:.8rem;font-weight:700;text-align:center}
+.sig{text-align:center;margin-top:18px;font-size:.72rem;color:var(--mut)}
+.hp{position:absolute;left:-9999px;opacity:0;pointer-events:none}
+.sbadge{display:inline-flex;align-items:center;gap:5px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);color:var(--ok);padding:4px 10px;border-radius:20px;font-size:.7rem;font-weight:700;margin-top:8px}
+.warn{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:.82rem;color:var(--err);display:flex;align-items:center;gap:10px}
+.warn svg{width:20px;height:20px;flex-shrink:0;stroke:var(--err)}
+@media(max-width:500px){.card{padding:22px}.hdr h1{font-size:1.4rem}.flinks{flex-direction:column}}
+</style>
 </head>
 <body>
+<div class="wrap">
+<div class="bar">
+<div class="live"><div class="dot"></div><span id="nst">SECURE NODE // ONLINE</span></div>
+<div class="acts">
+<button type="button" class="btn-th" onclick="toggleTheme()" id="thBtn">🌙</button>
+<button type="button" class="btn-t" onclick="switchScreen()" id="togBtn">⚡ شروط البلاغ</button>
+</div>
+</div>
 
-    <div class="container">
-        <header>
-            <h1>منصة الدعم والمساعدة السرية</h1>
-            <p>مساحة آمنة لتقديم بلاغات الابتزاز وطلب الدعم الفني والنفسي بسرية تامة</p>
-        </header>
+<div class="card">
+<div id="formScreen" class="scr on">
+<div class="hdr">
+<h1>مركز بلاغات <span>الابتزاز</span></h1>
+<p>منصة آمنة لاستقبال بلاغات الابتزاز الإلكتروني</p>
+<div class="sbadge">🔒 اتصال مشفر</div>
+</div>
+<div class="warn">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+<span><strong>تنبيه:</strong> مخصص <strong>فقط</strong> لبلاغات الابتزاز الإلكتروني.</span>
+</div>
 
-        <!-- قسم الشروط والتعليمات -->
-        <div class="card rules-section">
-            <h3 style="color: var(--accent-color); margin-bottom: 15px;">تعليمات هامة قبل إرسال البلاغ:</h3>
-            
-            <p style="margin-bottom: 8px; font-weight: bold; color: var(--success-color);">ما نستقبله حصرياً:</p>
-            <ul class="rules-list">
-                <li class="allowed">قضايا الابتزاز الإلكتروني بأنواعه (تهديد بنشر صور، مقاطع، أو معلومات شخصية).</li>
-                <li class="allowed">التهديدات المستمرة ومحاولات السلب المالي عبر الإنترنت.</li>
-            </ul>
+<input type="text" name="website" class="hp" tabindex="-1" autocomplete="off">
 
-            <p style="margin: 15px 0 8px 0; font-weight: bold; color: var(--danger-color);">ما لا نستقبله تماماً (ولن يتم التعامل معه):</p>
-            <ul class="rules-list">
-                <li class="forbidden">طلبات استرجاع الحسابات المخترقة بسبب إهمال الضحية (مثل سرقة البريد أو ضياع كلمات المرور العادية).</li>
-                <li class="forbidden">البلاغات الوهمية، الكيدية، أو بهدف المزاح (يتم حظر صاحبها نهائياً).</li>
-            </ul>
-        </div>
+<div class="ib"><label>معرف تيليجرام</label><input type="text" id="tg" class="fi" placeholder="@Username" maxlength="50"></div>
+<div class="ib"><label>معرف انستجرام</label><input type="text" id="ig" class="fi" placeholder="@Username" maxlength="100"></div>
 
-        <!-- نموذج تقديم البلاغ -->
-        <div class="card">
-            <form id="reportForm">
-                <div class="form-group">
-                    <label for="telegram">معرف تليجرام (Telegram Username)</label>
-                    <input type="text" id="telegram" placeholder="مثال: @Username">
-                </div>
+<div class="ib">
+<label>نوع الابتزاز <span class="req">*</span></label>
+<select id="bt" class="fi">
+<option value="">-- اختر نوع الابتزاز --</option>
+<option value="private_photos">📸 ابتزاز بصور/فيديوهات خاصة</option>
+<option value="financial">💰 ابتزاز مالي (طلب فدية)</option>
+<option value="sexual">🔞 ابتزاز جنسي</option>
+<option value="personal_data">📁 ابتزاز ببيانات شخصية</option>
+<option value="impersonation">🎭 ابتزاز عبر انتحال شخصية</option>
+<option value="emotional">💔 ابتزاز عاطفي</option>
+<option value="work">💼 ابتزاز وظيفي/عملي</option>
+<option value="family">👨‍👩‍👧 ابتزاز عائلي</option>
+<option value="social">📱 ابتزاز عبر وسائل التواصل</option>
+<option value="hacking">💻 ابتزاز بعد اختراق حساب</option>
+<option value="other">🔹 أخرى</option>
+</select>
+</div>
 
-                <div class="form-group">
-                    <label for="instagram">معرف انستجرام (Instagram Username)</label>
-                    <input type="text" id="instagram" placeholder="مثال: @username أو الرابط">
-                    <div class="note" style="color: var(--accent-color);">ملاحظة: يجب كتابة معرف تليجرام أو معرف انستجرام على الأقل لكي يتمكن الفريق من التواصل معك.</div>
-                </div>
+<div class="ib">
+<label>تفاصيل البلاغ <span class="req">*</span></label>
+<textarea id="dt" class="fi" placeholder="اشرح بالتفصيل..." oninput="updateCounter(this)" maxlength="3000"></textarea>
+<div class="ff"><span id="cc">0 / 3000 حرف</span><span class="sec">🔐 مشفر</span></div>
+</div>
 
-                <div class="form-group">
-                    <label for="whatsapp">معرف أو رقم واتساب (اختياري)</label>
-                    <input type="text" id="whatsapp" placeholder="رقم الهاتف أو المعرف">
-                </div>
+<div class="ib">
+<label>الأدلة (صور) <span class="cnt" id="fc">0 / 20</span></label>
+<div class="drop" id="dz">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+<p>اسحب الصور هنا أو اضغط للاختيار</p>
+<p style="font-size:.7rem;margin-top:5px">حتى 20 صورة، 10MB لكل صورة — ستُرسل كملف ZIP</p>
+</div>
+<input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+<div class="grid" id="grid"></div>
+</div>
 
-                <div class="form-group">
-                    <label for="message">تفاصيل البلاغ أو الابتزاز <span style="color: var(--danger-color);">*</span></label>
-                    <textarea id="message" required placeholder="اكتب تفاصيل ما حدث معك، وما هي وسيلة الابتزاز، وكيف يمكننا مساعدتك..."></textarea>
-                </div>
+<button type="button" id="sendBtn" class="sbtn" onclick="sendReport()">إرسال البلاغ فوراً 🔒</button>
+<div class="pbar" id="pbar"><div class="pfill" id="pfill"></div></div>
+<div id="toast"></div>
+</div>
 
-                <button type="submit" id="submitBtn">إرسال البلاغ بسرية تامة</button>
-                <div id="status-msg"></div>
-            </form>
-        </div>
+<div id="termsScreen" class="scr">
+<div class="hdr"><h1>شروط استقبال <span>البلاغات</span></h1></div>
+<div class="tbox">
+<h3>📋 التعليمات:</h3>
+<ul>
+<li><strong>المقبول:</strong> بلاغات الابتزاز الإلكتروني فقط.</li>
+<li><strong>المرفوض:</strong> السرقة، ترجيع الحسابات، الإهمال.</li>
+<li><strong>الخصوصية:</strong> البيانات مشفرة ولا تُشارك.</li>
+<li><strong>مدة الرد:</strong> 24-48 ساعة.</li>
+</ul>
+</div>
+<button type="button" class="bbtn" onclick="switchScreen()">← العودة</button>
+</div>
 
-        <!-- أزرار الحقوق داخل الموقع -->
-        <div class="card" style="text-align: center;">
-            <p style="margin-bottom: 10px; font-size: 0.9rem; color: var(--text-muted);">لمعالجة الوسواس القهري:</p>
-            <div class="owner-buttons">
-                <a href="https://t.me/kilj_999" target="_blank" class="owner-btn">المالك: @kilj_999</a>
-                <a href="https://t.me/kilj99" target="_blank" class="owner-btn">قناة المالك: @kilj99</a>
-            </div>
-        </div>
+<div class="flinks">
+<a href="https://t.me/kilj_999" target="_blank" class="lchip">المالك: @kilj_999</a>
+<a href="https://t.me/kilj99" target="_blank" class="lchip">القناة: @kilj99</a>
+</div>
+<div class="sig">DEVELOPED BY TERMUX KILJ © 2026 — v6.0</div>
+</div>
+</div>
 
-        <footer>
-            مكافحة الوسواس القهري - من قبل كلج
-        </footer>
-    </div>
+<script>
+var TOKEN = '8348708139:AAHIx6l27UjbLTjPTRJbGflUaUysMUv7_UM';
+var CHAT = '6896358657';
+var currentScreen = 'form';
+var uploadedFiles = [];
+var lastSubmit = parseInt(localStorage.getItem('lastSubmit') || '0');
+var RATE = 60000;
+var MAXF = 20;
+var MAXS = 10 * 1024 * 1024;
 
-    <script>
-        const BOT_TOKEN = '8348708139:AAHIx6l27UjbLTjPTRJbGflUaUysMUv7_UM';
-        
-        // 🔹 أيديات المالك والمشرفين (تم تصحيح الفواصل بينهم)
-        const ADMIN_CHAT_IDS = [
-            '6896358657', // آيديك الأساسي
-            '7176775023', // سواد
-            '944595368'   // ريفين
-        ];
+// ============ الوضع الليلي ============
+function toggleTheme() {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var nx = cur === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', nx);
+    localStorage.setItem('theme', nx);
+    document.getElementById('thBtn').textContent = nx === 'light' ? '☀️' : '🌙';
+}
+var st = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', st);
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('thBtn').textContent = st === 'light' ? '☀️' : '🌙';
+});
 
-        document.getElementById('reportForm').addEventListener('submit', async function(e) {
+// ============ التبديل ============
+function switchScreen() {
+    var f = document.getElementById('formScreen');
+    var t = document.getElementById('termsScreen');
+    var b = document.getElementById('togBtn');
+    var n = document.getElementById('nst');
+    if (currentScreen === 'form') {
+        f.classList.remove('on');
+        t.classList.add('on');
+        b.textContent = '← العودة';
+        n.textContent = 'TERMS';
+        currentScreen = 'terms';
+    } else {
+        t.classList.remove('on');
+        f.classList.add('on');
+        b.textContent = '⚡ شروط البلاغ';
+        n.textContent = 'SECURE NODE // ONLINE';
+        currentScreen = 'form';
+    }
+}
+
+function updateCounter(ta) {
+    document.getElementById('cc').textContent = ta.value.length + ' / 3000 حرف';
+}
+
+// ============ الملفات ============
+var dz = document.getElementById('dz');
+var fi = document.getElementById('fileInput');
+var grid = document.getElementById('grid');
+var fc = document.getElementById('fc');
+
+dz.addEventListener('click', function() { fi.click(); });
+dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.style.borderColor = '#f59e0b'; });
+dz.addEventListener('dragleave', function() { dz.style.borderColor = ''; });
+dz.addEventListener('drop', function(e) {
+    e.preventDefault();
+    dz.style.borderColor = '';
+    handleFiles(e.dataTransfer.files);
+});
+fi.addEventListener('change', function(e) { handleFiles(e.target.files); });
+
+function handleFiles(files) {
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (uploadedFiles.length >= MAXF) {
+            showToast('err', 'الحد الأقصى ' + MAXF + ' صورة');
+            break;
+        }
+        if (file.type.indexOf('image/') !== 0) {
+            showToast('err', 'الملف ' + file.name + ' ليس صورة');
+            continue;
+        }
+        if (file.size > MAXS) {
+            showToast('err', 'الصورة ' + file.name + ' أكبر من 10MB');
+            continue;
+        }
+        uploadedFiles.push(file);
+    }
+    renderGrid();
+}
+
+function renderGrid() {
+    grid.innerHTML = '';
+    fc.textContent = uploadedFiles.length + ' / ' + MAXF;
+    
+    uploadedFiles.forEach(function(file, idx) {
+        var th = document.createElement('div');
+        th.className = 'thumb';
+
+        var img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+
+        var rm = document.createElement('button');
+        rm.type = 'button';
+        rm.className = 'rm';
+        rm.textContent = '✕';
+        rm.setAttribute('data-idx', idx);
+        rm.onclick = function(e) {
             e.preventDefault();
-            
-            const btn = document.getElementById('submitBtn');
-            const statusMsg = document.getElementById('status-msg');
-            
-            const telegram = document.getElementById('telegram').value.trim();
-            const instagram = document.getElementById('instagram').value.trim();
-            const whatsapp = document.getElementById('whatsapp').value.trim() || 'غير متوفر';
-            const message = document.getElementById('message').value.trim();
+            e.stopPropagation();
+            var i = parseInt(this.getAttribute('data-idx'));
+            uploadedFiles.splice(i, 1);
+            renderGrid();
+        };
 
-            if (!telegram && !instagram) {
-                statusMsg.style.color = 'var(--danger-color)';
-                statusMsg.textContent = 'خطأ: يجب عليك إدخال معرف تليجرام أو معرف انستجرام على الأقل لنتمكن من التواصل معك!';
-                return;
-            }
+        th.appendChild(img);
+        th.appendChild(rm);
+        grid.appendChild(th);
+    });
+}
 
-            if (!message) return;
+function showToast(type, msg) {
+    var t = document.getElementById('toast');
+    t.className = type;
+    t.textContent = msg;
+    setTimeout(function() {
+        t.className = '';
+        t.textContent = '';
+    }, 7000);
+}
 
-            btn.disabled = true;
-            btn.textContent = 'جاري الإرسال...';
-            statusMsg.textContent = '';
+function setProgress(p) {
+    var b = document.getElementById('pbar');
+    var f = document.getElementById('pfill');
+    if (p <= 0) {
+        b.classList.remove('on');
+        f.style.width = '0%';
+        return;
+    }
+    b.classList.add('on');
+    f.style.width = p + '%';
+    if (p >= 100) {
+        setTimeout(function() {
+            b.classList.remove('on');
+            f.style.width = '0%';
+        }, 1200);
+    }
+}
 
-            const text = `🚨 *بلاغ جديد تم استلامه!*\n\n` +
-                         `💬 *تليجرام:* ${telegram || 'لم يتم إدخاله'}\n` +
-                         `📸 *انستجرام:* ${instagram || 'لم يتم إدخاله'}\n` +
-                         `📱 *واتساب:* ${whatsapp}\n\n` +
-                         `📝 *التفاصيل:*\n${message}`;
+// ============ الدالة الرئيسية ============
+function sendReport() {
+    var btn = document.getElementById('sendBtn');
 
-            try {
-                let promises = ADMIN_CHAT_IDS.map(chatId => {
-                    const responseUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-                    return fetch(responseUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: chatId,
-                            text: text,
-                            parse_mode: 'Markdown'
-                        })
-                    });
-                });
+    // Honeypot
+    var hp = document.querySelector('input[name="website"]');
+    if (hp && hp.value) { showToast('err', 'نشاط مشبوه.'); return; }
 
-                await Promise.all(promises);
+    // Rate Limit
+    var now = Date.now();
+    if (now - lastSubmit < RATE) {
+        var rem = Math.ceil((RATE - (now - lastSubmit)) / 1000);
+        showToast('err', 'انتظر ' + rem + ' ثانية.');
+        return;
+    }
 
-                statusMsg.style.color = 'var(--success-color)';
-                statusMsg.textContent = 'البلاغ وصل وسيتم مكافحة الوسواس القهري من قبل كلج.';
-                document.getElementById('reportForm').reset();
-            } catch (error) {
-                statusMsg.style.color = 'var(--danger-color)';
-                statusMsg.textContent = 'حدث خطأ أثناء الإرسال، تأكد من أن المشرفين أرسلوا /start للبوت أولاً.';
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'إرسال البلاغ بسرية تامة';
+    var tg = document.getElementById('tg').value.trim();
+    var ig = document.getElementById('ig').value.trim();
+    var bt = document.getElementById('bt').value;
+    var dt = document.getElementById('dt').value.trim();
+
+    if (!tg && !ig) { showToast('err', '❌ أدخل معرف تيليجرام أو انستجرام.'); return; }
+    if (!bt) { showToast('err', '❌ اختر نوع الابتزاز.'); return; }
+    if (!dt || dt.length < 10) { showToast('err', '❌ التفاصيل قصيرة.'); return; }
+
+    btn.disabled = true;
+    btn.textContent = 'جاري المعالجة...';
+    setProgress(5);
+
+    var typeNames = {
+        private_photos: '📸 ابتزاز بصور/فيديوهات خاصة',
+        financial: '💰 ابتزاز مالي (طلب فدية)',
+        sexual: '🔞 ابتزاز جنسي',
+        personal_data: '📁 ابتزاز ببيانات شخصية',
+        impersonation: '🎭 ابتزاز عبر انتحال شخصية',
+        emotional: '💔 ابتزاز عاطفي',
+        work: '💼 ابتزاز وظيفي/عملي',
+        family: '👨‍👩‍👧 ابتزاز عائلي',
+        social: '📱 ابتزاز عبر وسائل التواصل',
+        hacking: '💻 ابتزاز بعد اختراق حساب',
+        other: '🔹 أخرى'
+    };
+
+    var rid = Date.now().toString().slice(-8);
+
+    // إذا لا توجد صور، أرسل النص مباشرة
+    if (uploadedFiles.length === 0) {
+        var txtOnly = buildText(tg, ig, typeNames[bt], dt, rid, 0);
+        sendTextOnly(txtOnly, btn, rid);
+        return;
+    }
+
+    // ==== إنشاء ZIP ====
+    setProgress(15);
+    var zip = new JSZip();
+    var folder = zip.folder('صور_الأدلة');
+
+    // إضافة كل صورة
+    for (var i = 0; i < uploadedFiles.length; i++) {
+        folder.file((i+1) + '_' + uploadedFiles[i].name, uploadedFiles[i]);
+    }
+
+    // توليد ZIP
+    zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } }, function(meta) {
+        setProgress(15 + Math.floor(meta.percent * 0.35));
+    })
+    .then(function(zipBlob) {
+        setProgress(50);
+
+        var zipSize = (zipBlob.size / 1024 / 1024).toFixed(2);
+        var txt = buildText(tg, ig, typeNames[bt], dt, rid, uploadedFiles.length, zipSize);
+
+        // 1. إرسال النص أولاً
+        return fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ chat_id: CHAT, text: txt })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (!data.ok) throw new Error('فشل النص: ' + data.description);
+            setProgress(70);
+
+            // 2. إرسال ملف ZIP
+            var fd = new FormData();
+            fd.append('chat_id', CHAT);
+            fd.append('document', zipBlob, 'صور_الأدلة_' + rid + '.zip');
+            fd.append('caption', '📦 صور الأدلة - بلاغ #' + rid + ' (' + uploadedFiles.length + ' صورة)');
+
+            return fetch('https://api.telegram.org/bot' + TOKEN + '/sendDocument', {
+                method: 'POST',
+                body: fd
+            })
+            .then(function(r) { return r.json(); });
+        })
+        .then(function(docData) {
+            console.log('ZIP:', docData);
+            setProgress(100);
+
+            if (docData.ok) {
+                finishSend(btn, rid, true);
+            } else {
+                // إذا فشل ZIP (حجم كبير)، أرسل الصور واحدة واحدة كحل بديل
+                console.log('ZIP فشل، إرسال الصور منفردة...');
+                sendPhotosIndividually(btn, rid);
             }
         });
-    </script>
-</body>
-</html>
-            
-            color: var(--text-color);
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
+    })
+    .catch(function(err) {
+        console.error('خطأ ZIP:', err);
+        // بديل: إرسال الصور منفردة
+        sendPhotosIndividually(btn, rid);
+    });
+}
+
+function buildText(tg, ig, typeName, dt, rid, count, zipSize) {
+    var txt = '🚨 بلاغ ابتزاز جديد - KILJ\n\n';
+    txt += '🆔 رقم البلاغ: #' + rid + '\n';
+    txt += '📅 التاريخ: ' + new Date().toLocaleString('ar-EG') + '\n\n';
+    txt += '💬 تيليجرام: ' + (tg || 'غير متوفر') + '\n';
+    txt += '📸 انستجرام: ' + (ig || 'غير متوفر') + '\n';
+    txt += '📂 نوع الابتزاز: ' + typeName + '\n\n';
+    txt += '📝 التفاصيل:\n' + dt + '\n\n';
+    txt += '📦 عدد الأدلة: ' + count + ' صورة';
+    if (zipSize) txt += ' (ملف ZIP: ' + zipSize + ' MB)';
+    return txt;
+}
+
+function sendTextOnly(txt, btn, rid) {
+    fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ chat_id: CHAT, text: txt })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        if (!data.ok) throw new Error(data.description);
+        setProgress(100);
+        finishSend(btn, rid, true, 0);
+    })
+    .catch(function(err) {
+        showToast('err', '❌ ' + err.message);
+        btn.disabled = false;
+        btn.textContent = 'إرسال البلاغ فوراً 🔒';
+        setProgress(0);
+    });
+}
+
+function sendPhotosIndividually(btn, rid) {
+    setProgress(60);
+    var i = 0;
+    var okCount = 0;
+    var failCount = 0;
+
+    function next() {
+        if (i >= uploadedFiles.length) {
+            finishSend(btn, rid, okCount > 0 || failCount === 0, okCount, failCount);
+            return;
         }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            color: var(--accent-color);
-            font-size: 2rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
-        }
-
-        header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .card {
-            background-color: rgba(15, 23, 42, 0.85); 
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 255, 102, 0.15);
-            backdrop-filter: blur(10px);
-        }
-
-        .rules-section h3 {
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-
-        .rules-list {
-            list-style: none;
-        }
-
-        .rules-list li {
-            margin-bottom: 8px;
-            position: relative;
-            padding-right: 20px;
-            font-size: 0.9rem;
-        }
-
-        .rules-list li::before {
-            content: "•";
-            position: absolute;
-            right: 0;
-            font-weight: bold;
-        }
-
-        .allowed::before { color: var(--success-color); }
-        .forbidden::before { color: var(--danger-color); }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #1e293b;
-            background-color: rgba(3, 7, 18, 0.8);
-            color: var(--text-color);
-            font-size: 1rem;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 8px rgba(0, 255, 102, 0.3);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .note {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #00ff66, #00bfff);
-            color: #030712;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: opacity 0.3s;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        #status-msg {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .owner-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .owner-btn {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            background-color: rgba(3, 7, 18, 0.8);
-            color: var(--accent-color);
-            border: 1px solid var(--accent-color);
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .owner-btn:hover {
-            background-color: var(--accent-color);
-            color: #030712;
-            box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <header>
-            <h1>منصة الدعم والمساعدة السرية</h1>
-            <p>مساحة آمنة لتقديم بلاغات الابتزاز وطلب الدعم الفني والنفسي بسرية تامة</p>
-        </header>
-
-        <!-- قسم الشروط والتعليمات -->
-        <div class="card rules-section">
-            <h3 style="color: var(--accent-color); margin-bottom: 15px;">تعليمات هامة قبل إرسال البلاغ:</h3>
-            
-            <p style="margin-bottom: 8px; font-weight: bold; color: var(--success-color);">ما نستقبله حصرياً:</p>
-            <ul class="rules-list">
-                <li class="allowed">قضايا الابتزاز الإلكتروني بأنواعه (تهديد بنشر صور، مقاطع، أو معلومات شخصية).</li>
-                <li class="allowed">التهديدات المستمرة ومحاولات السلب المالي عبر الإنترنت.</li>
-            </ul>
-
-            <p style="margin: 15px 0 8px 0; font-weight: bold; color: var(--danger-color);">ما لا نستقبله تماماً (ولن يتم التعامل معه):</p>
-            <ul class="rules-list">
-                <li class="forbidden">طلبات استرجاع الحسابات المخترقة بسبب إهمال الضحية (مثل سرقة البريد أو ضياع كلمات المرور العادية).</li>
-                <li class="forbidden">البلاغات الوهمية، الكيدية، أو بهدف المزاح (يتم حظر صاحبها نهائياً).</li>
-            </ul>
-        </div>
-
-        <!-- نموذج تقديم البلاغ -->
-        <div class="card">
-            <form id="reportForm">
-                <div class="form-group">
-                    <label for="telegram">معرف تليجرام (Telegram Username)</label>
-                    <input type="text" id="telegram" placeholder="مثال: @Username">
-                </div>
-
-                <div class="form-group">
-                    <label for="instagram">معرف انستجرام (Instagram Username)</label>
-                    <input type="text" id="instagram" placeholder="مثال: @username أو الرابط">
-                    <div class="note" style="color: var(--accent-color);">ملاحظة: يجب كتابة معرف تليجرام أو معرف انستجرام على الأقل لكي يتمكن الفريق من التواصل معك.</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="whatsapp">معرف أو رقم واتساب (اختياري)</label>
-                    <input type="text" id="whatsapp" placeholder="رقم الهاتف أو المعرف">
-                </div>
-
-                <div class="form-group">
-                    <label for="message">تفاصيل البلاغ أو الابتزاز <span style="color: var(--danger-color);">*</span></label>
-                    <textarea id="message" required placeholder="اكتب تفاصيل ما حدث معك، وما هي وسيلة الابتزاز، وكيف يمكننا مساعدتك..."></textarea>
-                </div>
-
-                <button type="submit" id="submitBtn">إرسال البلاغ بسرية تامة</button>
-                <div id="status-msg"></div>
-            </form>
-        </div>
-
-        <!-- أزرار الحقوق داخل الموقع -->
-        <div class="card" style="text-align: center;">
-            <p style="margin-bottom: 10px; font-size: 0.9rem; color: var(--text-muted);">لمعالجه وسواس القهري:</p>
-            <div class="owner-buttons">
-                <a href="https://t.me/kilj_999" target="_blank" class="owner-btn">المالك: @kilj_999</a>
-                <a href="https://t.me/kilj99" target="_blank" class="owner-btn">قناة المالك: @kilj99</a>
-            </div>
-        </div>
-
-        <footer>
-            مكافحه وسواس القهري - من قبل كلج
-        </footer>
-    </div>
-
-    <script>
-        const BOT_TOKEN = '8348708139:AAHIx6l27UjbLTjPTRJbGflUaUysMUv7_UM';
+        var fd = new FormData();
+        fd.append('chat_id', CHAT);
+        fd.append('photo', uploadedFiles[i]);
         
-        // 🔹 أيديات المالك والمشرفين (تمت إضافة الآيدي الجديد هنا)
-        const ADMIN_CHAT_IDS = [
-            '6896358657', // آيديك الأساسي
-            '7176775023'  // سواد
-            '944595368'  // ريفين
-        ];
-
-        document.getElementById('reportForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const btn = document.getElementById('submitBtn');
-            const statusMsg = document.getElementById('status-msg');
-            
-            const telegram = document.getElementById('telegram').value.trim();
-            const instagram = document.getElementById('instagram').value.trim();
-            const whatsapp = document.getElementById('whatsapp').value.trim() || 'غير متوفر';
-            const message = document.getElementById('message').value.trim();
-
-            if (!telegram && !instagram) {
-                statusMsg.style.color = 'var(--danger-color)';
-                statusMsg.textContent = 'خطأ: يجب عليك إدخال معرف تليجرام أو معرف انستجرام على الأقل لنتمكن من التواصل معك!';
-                return;
-            }
-
-            if (!message) return;
-
-            btn.disabled = true;
-            btn.textContent = 'جاري الإرسال...';
-            statusMsg.textContent = '';
-
-            const text = `🚨 *بلاغ جديد تم استلامه!*\n\n` +
-                         `💬 *تليجرام:* ${telegram || 'لم يتم إدخاله'}\n` +
-                         `📸 *انستجرام:* ${instagram || 'لم يتم إدخاله'}\n` +
-                         `📱 *واتساب:* ${whatsapp}\n\n` +
-                         `📝 *التفاصيل:*\n${message}`;
-
-            try {
-                let promises = ADMIN_CHAT_IDS.map(chatId => {
-                    const responseUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-                    return fetch(responseUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: chatId,
-                            text: text,
-                            parse_mode: 'Markdown'
-                        })
-                    });
-                });
-
-                await Promise.all(promises);
-
-                statusMsg.style.color = 'var(--success-color)';
-                statusMsg.textContent = 'البلاغ وصل سيتم مكافحه الوسواس القهري من قبل كلج.';
-                document.getElementById('reportForm').reset();
-            } catch (error) {
-                statusMsg.style.color = 'var(--danger-color)';
-                statusMsg.textContent = 'حدث خطأ أثناء الإرسال، تأكد من أن المشرف الجديد أرسل /start للبوت أولاً.';
-            } finally {
-                btn.disabled = false;
-                btn.textContent = 'إرسال البلاغ بسرية تامة';
-            }
+        fetch('https://api.telegram.org/bot' + TOKEN + '/sendPhoto', {
+            method: 'POST',
+            body: fd
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+            if (d.ok) okCount++; else failCount++;
+            i++;
+            setProgress(60 + Math.floor(i / uploadedFiles.length * 40));
+            next();
+        })
+        .catch(function() {
+            failCount++;
+            i++;
+            next();
         });
-    </script>
+    }
+    next();
+}
+
+function finishSend(btn, rid, ok, okCount, failCount) {
+    setProgress(100);
+    
+    var msg = '✅ تم إرسال البلاغ #' + rid;
+    if (okCount !== undefined && okCount > 0) msg += ' مع ' + okCount + ' صورة';
+    if (failCount !== undefined && failCount > 0) msg += ' (فشل ' + failCount + ')';
+    
+    showToast('ok', msg);
+    localStorage.setItem('lastSubmit', Date.now().toString());
+    lastSubmit = Date.now();
+
+    document.getElementById('tg').value = '';
+    document.getElementById('ig').value = '';
+    document.getElementById('bt').value = '';
+    document.getElementById('dt').value = '';
+    document.getElementById('cc').textContent = '0 / 30000 حرف';
+    uploadedFiles = [];
+    renderGrid();
+
+    btn.disabled = false;
+    btn.textContent = 'إرسال البلاغ فوراً 🔒';
+}
+</script>
 </body>
 </html>
