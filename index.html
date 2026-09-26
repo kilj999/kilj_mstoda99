@@ -10,7 +10,8 @@
 :root{--bg:#09090b;--surf:#121216;--surf2:#18181b;--bd:#27272a;--acc:#f59e0b;--grad:linear-gradient(135deg,#f59e0b,#d97706);--txt:#f4f4f5;--mut:#71717a;--ok:#10b981;--err:#ef4444}
 [data-theme="light"]{--bg:#f9fafb;--surf:#fff;--surf2:#f3f4f6;--bd:#e5e7eb;--txt:#111827;--mut:#6b7280}
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif}
-body{background:var(--bg);color:var(--txt);min-height:100vh;padding:20px}
+html,body{width:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--txt);min-height:100vh;padding:20px 15px;display:block}
 .wrap{width:100%;max-width:680px;margin:0 auto}
 .bar{display:flex;justify-content:space-between;align-items:center;background:var(--surf);border:1px solid var(--bd);padding:12px 18px;border-radius:12px;margin-bottom:20px;font-size:.78rem;color:var(--mut);flex-wrap:wrap;gap:10px}
 .live{display:flex;align-items:center;gap:8px;color:var(--ok);font-weight:600}
@@ -153,13 +154,19 @@ select.fi{cursor:pointer}
 <a href="https://t.me/kilj_999" target="_blank" class="lchip">المالك: @kilj_999</a>
 <a href="https://t.me/kilj99" target="_blank" class="lchip">القناة: @kilj99</a>
 </div>
-<div class="sig">DEVELOPED BY TERMUX KILJ © 2026 — v6.0</div>
+<div class="sig">DEVELOPED BY TERMUX KILJ © 2026 — v6.1</div>
 </div>
 </div>
 
 <script>
 var TOKEN = '8348708139:AAHIx6l27UjbLTjPTRJbGflUaUysMUv7_UM';
-var CHAT = '6896358657';
+
+// ============ المشرفون (يصلهم البلاغ) ============
+var ADMINS = [
+    '6896358657',  // المالك
+    '7176775023'   // المشرف
+];
+
 var currentScreen = 'form';
 var uploadedFiles = [];
 var lastSubmit = parseInt(localStorage.getItem('lastSubmit') || '0');
@@ -300,15 +307,88 @@ function setProgress(p) {
     }
 }
 
+// ============ إرسال لكل المشرفين ============
+function sendToAllAdmins(text) {
+    var promises = ADMINS.map(function(adminId) {
+        return fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ chat_id: adminId, text: text })
+        }).then(function(r) { return r.json(); });
+    });
+    return Promise.all(promises);
+}
+
+function sendDocToAllAdmins(blob, filename, caption) {
+    var promises = ADMINS.map(function(adminId) {
+        var fd = new FormData();
+        fd.append('chat_id', adminId);
+        fd.append('document', blob, filename);
+        fd.append('caption', caption);
+        return fetch('https://api.telegram.org/bot' + TOKEN + '/sendDocument', {
+            method: 'POST',
+            body: fd
+        }).then(function(r) { return r.json(); });
+    });
+    return Promise.all(promises);
+}
+
+function sendPhotosToAllAdmins(btn, rid) {
+    var total = uploadedFiles.length * ADMINS.length;
+    var done = 0;
+    var okCount = 0;
+    var failCount = 0;
+    
+    function oneSend(adminId, file) {
+        var fd = new FormData();
+        fd.append('chat_id', adminId);
+        fd.append('photo', file);
+        return fetch('https://api.telegram.org/bot' + TOKEN + '/sendPhoto', {
+            method: 'POST',
+            body: fd
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+            if (d.ok) okCount++; else failCount++;
+            done++;
+            setProgress(60 + Math.floor(done / total * 40));
+        })
+        .catch(function() { failCount++; done++; });
+    }
+    
+    var chain = Promise.resolve();
+    ADMINS.forEach(function(adminId) {
+        uploadedFiles.forEach(function(file) {
+            chain = chain.then(function() { return oneSend(adminId, file); });
+        });
+    });
+    
+    chain.then(function() {
+        finishSend(btn, rid, okCount, failCount);
+    });
+}
+
+// ============ بناء النص ============
+function buildText(tg, ig, typeName, dt, rid, count, zipSize) {
+    var txt = '🚨 بلاغ ابتزاز جديد - KILJ v6.1\n\n';
+    txt += '🆔 رقم البلاغ: #' + rid + '\n';
+    txt += '📅 التاريخ: ' + new Date().toLocaleString('ar-EG') + '\n\n';
+    txt += '💬 تيليجرام: ' + (tg || 'غير متوفر') + '\n';
+    txt += '📸 انستجرام: ' + (ig || 'غير متوفر') + '\n';
+    txt += '📂 نوع الابتزاز: ' + typeName + '\n\n';
+    txt += '📝 التفاصيل:\n' + dt + '\n\n';
+    txt += '📦 عدد الأدلة: ' + count + ' صورة';
+    if (zipSize) txt += ' (ملف ZIP: ' + zipSize + ' MB)';
+    return txt;
+}
+
 // ============ الدالة الرئيسية ============
 function sendReport() {
     var btn = document.getElementById('sendBtn');
 
-    // Honeypot
     var hp = document.querySelector('input[name="website"]');
     if (hp && hp.value) { showToast('err', 'نشاط مشبوه.'); return; }
 
-    // Rate Limit
     var now = Date.now();
     if (now - lastSubmit < RATE) {
         var rem = Math.ceil((RATE - (now - lastSubmit)) / 1000);
@@ -345,10 +425,20 @@ function sendReport() {
 
     var rid = Date.now().toString().slice(-8);
 
-    // إذا لا توجد صور، أرسل النص مباشرة
+    // بدون صور
     if (uploadedFiles.length === 0) {
         var txtOnly = buildText(tg, ig, typeNames[bt], dt, rid, 0);
-        sendTextOnly(txtOnly, btn, rid);
+        sendToAllAdmins(txtOnly)
+        .then(function() {
+            setProgress(100);
+            finishSend(btn, rid, 0, 0);
+        })
+        .catch(function(err) {
+            showToast('err', '❌ ' + err.message);
+            btn.disabled = false;
+            btn.textContent = 'إرسال البلاغ فوراً 🔒';
+            setProgress(0);
+        });
         return;
     }
 
@@ -357,12 +447,10 @@ function sendReport() {
     var zip = new JSZip();
     var folder = zip.folder('صور_الأدلة');
 
-    // إضافة كل صورة
     for (var i = 0; i < uploadedFiles.length; i++) {
         folder.file((i+1) + '_' + uploadedFiles[i].name, uploadedFiles[i]);
     }
 
-    // توليد ZIP
     zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } }, function(meta) {
         setProgress(15 + Math.floor(meta.percent * 0.35));
     })
@@ -371,124 +459,45 @@ function sendReport() {
 
         var zipSize = (zipBlob.size / 1024 / 1024).toFixed(2);
         var txt = buildText(tg, ig, typeNames[bt], dt, rid, uploadedFiles.length, zipSize);
+        var zipName = 'صور_الأدلة_' + rid + '.zip';
+        var caption = '📦 صور الأدلة - بلاغ #' + rid + ' (' + uploadedFiles.length + ' صورة)';
 
-        // 1. إرسال النص أولاً
-        return fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ chat_id: CHAT, text: txt })
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            if (!data.ok) throw new Error('فشل النص: ' + data.description);
+        // 1. إرسال النص للجميع
+        return sendToAllAdmins(txt)
+        .then(function(results) {
+            var anyOk = results.some(function(r) { return r.ok; });
+            if (!anyOk) throw new Error('فشل إرسال النص');
             setProgress(70);
 
-            // 2. إرسال ملف ZIP
-            var fd = new FormData();
-            fd.append('chat_id', CHAT);
-            fd.append('document', zipBlob, 'صور_الأدلة_' + rid + '.zip');
-            fd.append('caption', '📦 صور الأدلة - بلاغ #' + rid + ' (' + uploadedFiles.length + ' صورة)');
-
-            return fetch('https://api.telegram.org/bot' + TOKEN + '/sendDocument', {
-                method: 'POST',
-                body: fd
-            })
-            .then(function(r) { return r.json(); });
+            // 2. إرسال ZIP للجميع
+            return sendDocToAllAdmins(zipBlob, zipName, caption);
         })
-        .then(function(docData) {
-            console.log('ZIP:', docData);
+        .then(function(docResults) {
+            console.log('ZIP results:', docResults);
             setProgress(100);
 
-            if (docData.ok) {
+            var anyZipOk = docResults.some(function(d) { return d.ok; });
+            if (anyZipOk) {
                 finishSend(btn, rid, true);
             } else {
-                // إذا فشل ZIP (حجم كبير)، أرسل الصور واحدة واحدة كحل بديل
+                // بديل: إرسال الصور منفردة
                 console.log('ZIP فشل، إرسال الصور منفردة...');
-                sendPhotosIndividually(btn, rid);
+                sendPhotosToAllAdmins(btn, rid);
             }
         });
     })
     .catch(function(err) {
         console.error('خطأ ZIP:', err);
-        // بديل: إرسال الصور منفردة
-        sendPhotosIndividually(btn, rid);
+        sendPhotosToAllAdmins(btn, rid);
     });
 }
 
-function buildText(tg, ig, typeName, dt, rid, count, zipSize) {
-    var txt = '🚨 بلاغ ابتزاز جديد - KILJ\n\n';
-    txt += '🆔 رقم البلاغ: #' + rid + '\n';
-    txt += '📅 التاريخ: ' + new Date().toLocaleString('ar-EG') + '\n\n';
-    txt += '💬 تيليجرام: ' + (tg || 'غير متوفر') + '\n';
-    txt += '📸 انستجرام: ' + (ig || 'غير متوفر') + '\n';
-    txt += '📂 نوع الابتزاز: ' + typeName + '\n\n';
-    txt += '📝 التفاصيل:\n' + dt + '\n\n';
-    txt += '📦 عدد الأدلة: ' + count + ' صورة';
-    if (zipSize) txt += ' (ملف ZIP: ' + zipSize + ' MB)';
-    return txt;
-}
-
-function sendTextOnly(txt, btn, rid) {
-    fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ chat_id: CHAT, text: txt })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-        if (!data.ok) throw new Error(data.description);
-        setProgress(100);
-        finishSend(btn, rid, true, 0);
-    })
-    .catch(function(err) {
-        showToast('err', '❌ ' + err.message);
-        btn.disabled = false;
-        btn.textContent = 'إرسال البلاغ فوراً 🔒';
-        setProgress(0);
-    });
-}
-
-function sendPhotosIndividually(btn, rid) {
-    setProgress(60);
-    var i = 0;
-    var okCount = 0;
-    var failCount = 0;
-
-    function next() {
-        if (i >= uploadedFiles.length) {
-            finishSend(btn, rid, okCount > 0 || failCount === 0, okCount, failCount);
-            return;
-        }
-        var fd = new FormData();
-        fd.append('chat_id', CHAT);
-        fd.append('photo', uploadedFiles[i]);
-        
-        fetch('https://api.telegram.org/bot' + TOKEN + '/sendPhoto', {
-            method: 'POST',
-            body: fd
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(d) {
-            if (d.ok) okCount++; else failCount++;
-            i++;
-            setProgress(60 + Math.floor(i / uploadedFiles.length * 40));
-            next();
-        })
-        .catch(function() {
-            failCount++;
-            i++;
-            next();
-        });
-    }
-    next();
-}
-
-function finishSend(btn, rid, ok, okCount, failCount) {
+function finishSend(btn, rid, ok, fail) {
     setProgress(100);
     
-    var msg = '✅ تم إرسال البلاغ #' + rid;
-    if (okCount !== undefined && okCount > 0) msg += ' مع ' + okCount + ' صورة';
-    if (failCount !== undefined && failCount > 0) msg += ' (فشل ' + failCount + ')';
+    var msg = '✅ تم إرسال البلاغ #' + rid + ' لجميع المشرفين';
+    if (ok > 0) msg += ' (' + ok + ' صورة)';
+    if (fail > 0) msg += ' فشل ' + fail;
     
     showToast('ok', msg);
     localStorage.setItem('lastSubmit', Date.now().toString());
@@ -498,7 +507,7 @@ function finishSend(btn, rid, ok, okCount, failCount) {
     document.getElementById('ig').value = '';
     document.getElementById('bt').value = '';
     document.getElementById('dt').value = '';
-    document.getElementById('cc').textContent = '0 / 30000 حرف';
+    document.getElementById('cc').textContent = '0 / 3000 حرف';
     uploadedFiles = [];
     renderGrid();
 
